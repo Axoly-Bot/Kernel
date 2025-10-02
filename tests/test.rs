@@ -13,7 +13,7 @@ mod tests {
         let token = "test_token".to_string();
         let intents = Intents::empty();
         
-        let result = Kernel::Kernel::<()>::new(token, intents).await;
+        let result = Kernel::Kernel::new(token, intents).await;
         // En un entorno real esto fallaría sin un token válido,
         // pero verificamos que la función se compila correctamente
         assert!(result.is_err()); // Debería fallar con token inválido
@@ -22,7 +22,7 @@ mod tests {
     #[test]
     fn test_kernel_struct_fields() {
         // Test para verificar que la estructura tiene los campos esperados
-        let kernel = std::mem::size_of::<Kernel::Kernel<()>>();
+        let kernel = std::mem::size_of::<Kernel::Kernel>();
         assert!(kernel > 0, "Kernel debería tener un tamaño mayor a 0");
     }
 
@@ -37,7 +37,7 @@ mod tests {
         let intents = Intents::empty();
         
         // Este test principalmente verifica que el código compila
-        let _kernel_result = Kernel::Kernel::<()>::new(token, intents).await;
+        let _kernel_result = Kernel::Kernel::new(token, intents).await;
         
         // En un test real necesitarías mock objects para probar completamente
         assert!(true, "Test de compilación pasado");
@@ -46,7 +46,7 @@ mod tests {
     #[test]
     fn test_default_generic_type() {
         // Test para verificar que el tipo genérico por defecto funciona
-        let _kernel: Kernel::Kernel::<()>; // Esto debería compilar con el tipo por defecto
+        let _kernel: Kernel::Kernel; // Esto debería compilar con el tipo por defecto
         assert!(true, "Tipo genérico por defecto funciona correctamente");
     }
 
@@ -56,7 +56,7 @@ mod tests {
         let token = "test".to_string();
         let intents = Intents::empty();
         
-        if let Ok(kernel) =  Kernel::Kernel::<()>::new(token, intents).await {
+        if let Ok(kernel) =  Kernel::Kernel::new(token, intents).await {
             // Los vectores deberían estar inicializados con capacidad
             assert!(kernel.senders.capacity() > 0);
             assert!(kernel.tasks.capacity() > 0);

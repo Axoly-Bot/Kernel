@@ -18,3 +18,4 @@ twilight-bucket = "0.2"
 
 vesper = "0.13.0"
 tokio = { version = "1.47.1", features = ["full"] }
+tracing = "0.1.41"

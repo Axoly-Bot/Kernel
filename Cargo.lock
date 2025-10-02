@@ -22,6 +22,7 @@ dependencies = [
  "Logger",
  "RedisCache",
  "tokio",
+ "tracing",
  "twilight",
  "twilight-bucket",
  "twilight-gateway",
@@ -42,7 +43,7 @@ dependencies = [
 [[package]]
 name = "RedisCache"
 version = "0.1.0"
-source = "git+https://github.com/Axoly-Bot/RedisCache.git#a239761500dbdafb07a0553ef72084fdea23298d"
+source = "git+https://github.com/Axoly-Bot/RedisCache.git#39b1f3459f11a4f37b60d0771da9bebf3978b3b0"
 dependencies = [
  "bb8-redis",
  "redlight",
@@ -1260,9 +1261,9 @@ dependencies = [
 
 [[package]]
 name = "quote"
-version = "1.0.40"
+version = "1.0.41"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1885c039570dc00dcb4ff087a89e185fd56bae234ddc7f056a945bf36467248d"
+checksum = "ce25767e7b499d1b604768e7cde645d14cc8584231ea6b295e9c9eb22c02e1d1"
 dependencies = [
  "proc-macro2",
 ]
