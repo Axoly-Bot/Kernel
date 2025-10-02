@@ -1,0 +1,20 @@
+[package]
+name = "Kernel"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+Database = { git = "https://github.com/Axoly-Bot/Database.git", version = "0.1.0" }
+Logger = { git = "https://github.com/Axoly-Bot/Logger.git", version = "0.1.0" }
+RedisCache = { git = "https://github.com/Axoly-Bot/RedisCache.git", version = "0.1.0" }
+
+
+
+twilight = "0.16.0"
+twilight-http = "0.16.0"
+twilight-model = "0.16.0"
+twilight-gateway = { version = "0.16.0", features = ["rustls-webpki-roots"] }
+twilight-bucket = "0.2"
+
+vesper = "0.13.0"
+tokio = { version = "1.47.1", features = ["full"] }
