@@ -13,7 +13,7 @@ mod tests {
         let token = "test_token".to_string();
         let intents = Intents::empty();
         
-        let result = Kernel::Kernel::new(token, intents).await;
+        let result = Kernel::Kernel::new(token, intents, "redis://localhost".to_string()).await;
         // En un entorno real esto fallaría sin un token válido,
         // pero verificamos que la función se compila correctamente
         assert!(result.is_err()); // Debería fallar con token inválido
@@ -37,7 +37,7 @@ mod tests {
         let intents = Intents::empty();
         
         // Este test principalmente verifica que el código compila
-        let _kernel_result = Kernel::Kernel::new(token, intents).await;
+        let _kernel_result = Kernel::Kernel::new(token, intents, "redis://localhost".to_string()).await;
         
         // En un test real necesitarías mock objects para probar completamente
         assert!(true, "Test de compilación pasado");
