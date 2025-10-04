@@ -1,9 +1,10 @@
 use std::{error::Error, sync::{atomic::{AtomicBool, Ordering}, Arc}};
+use logger::GenericLogger;
 use tokio::{signal, task::JoinHandle};
-use twilight_gateway::{create_recommended, CloseFrame, Config, Event, EventTypeFlags, Intents, MessageSender, Shard, StreamExt};
+use twilight_gateway::{create_recommended, CloseFrame, Config, Event, EventTypeFlags, Intents, MessageSender, Shard, ShardId, StreamExt};
 use twilight_http::Client as HttpCLient;
-use RedisCache::Cache;
-// use RedisCache::Cache;
+use redis_cache::Cache;
+
 
 static SHUTDOWN: AtomicBool = AtomicBool::new(false);
 
@@ -17,7 +18,7 @@ pub struct Kernel {
 }
 
 impl Kernel {
-    pub async fn new(token: String, intents: Intents) -> Result<Self, Box<dyn Error>> {
+    pub async fn new(token: String, intents: Intents, redis_uri: String) -> Result<Self, Box<dyn Error>> {
         let http = Arc::new(HttpCLient::new(token.clone()));
         let config = Config::new(token.clone(), intents);
 
@@ -26,7 +27,7 @@ impl Kernel {
         let senders = Vec::with_capacity(shards.len());
         let tasks = Vec::with_capacity(shards.len());
 
-        let cache = Cache::new().await;
+        let cache = Cache::new(redis_uri).await;
 
         Ok(Self {
             token,
@@ -43,20 +44,20 @@ impl Kernel {
         // Por ahora, para que compile, un loop simple que verifica SHUTDOWN
         while !SHUTDOWN.load(Ordering::Relaxed) {
             while let Some(item) = shard.next_event(EventTypeFlags::all()).await {
-            let event = match item {
-                Ok(Event::GatewayClose(_)) if SHUTDOWN.load(Ordering::Relaxed) => break,
-                Ok(event) => event,
-                Err(source) => {
-                    tracing::warn!(?source, "error receiving event");
+                let event = match item {
+                    Ok(Event::GatewayClose(_)) if SHUTDOWN.load(Ordering::Relaxed) => break,
+                    Ok(event) => event,
+                    Err(source) => {
+                        tracing::warn!(?source, "error receiving event");
 
-                    continue;
-                }
-            };
+                        continue;
+                    }
+                };
 
-            // You'd normally want to spawn a new tokio task for each event and
-            // handle the event there to not block the shard.
-            tracing::debug!(?event, shard = ?shard.id(), "received event");
-        }
+                // You'd normally want to spawn a new tokio task for each event and
+                // handle the event there to not block the shard.
+                tracing::debug!(?event, shard = ?shard.id(), "received event");
+            }
         }
     }
 
@@ -92,5 +93,6 @@ impl Kernel {
             _ = jh;
         }
     }
+
 }
 

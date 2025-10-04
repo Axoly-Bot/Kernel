@@ -19,8 +19,8 @@ name = "Kernel"
 version = "0.1.0"
 dependencies = [
  "Database",
- "Logger",
- "RedisCache",
+ "logger",
+ "redis_cache",
  "tokio",
  "tracing",
  "twilight",
@@ -29,27 +29,6 @@ dependencies = [
  "twilight-http 0.16.0",
  "twilight-model 0.16.0",
  "vesper",
-]
-
-[[package]]
-name = "Logger"
-version = "0.1.0"
-source = "git+https://github.com/Axoly-Bot/Logger.git#5ce98bae8b7c10c5abf3b3e75525d6ab452b3e94"
-dependencies = [
- "chrono",
- "tokio",
-]
-
-[[package]]
-name = "RedisCache"
-version = "0.1.0"
-source = "git+https://github.com/Axoly-Bot/RedisCache.git#39b1f3459f11a4f37b60d0771da9bebf3978b3b0"
-dependencies = [
- "bb8-redis",
- "redlight",
- "rkyv",
- "tokio",
- "twilight-model 0.16.0",
 ]
 
 [[package]]
@@ -1008,6 +987,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "34080505efa8e45a4b816c349525ebe327ceaa8559756f0356cba97ef3bf7432"
 
 [[package]]
+name = "logger"
+version = "0.2.1"
+source = "git+https://github.com/Axoly-Bot/Logger.git#58e9a45a43c45e08f1e5389c80c781d4164e981a"
+dependencies = [
+ "chrono",
+ "tokio",
+]
+
+[[package]]
 name = "memchr"
 version = "2.7.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1330,6 +1318,18 @@ dependencies = [
  "tokio",
  "tokio-util",
  "url",
+]
+
+[[package]]
+name = "redis_cache"
+version = "0.2.1"
+source = "git+https://github.com/Axoly-Bot/RedisCache.git#ff0199c1f04ac34f25bf7a2a8843b383224e3eca"
+dependencies = [
+ "bb8-redis",
+ "redlight",
+ "rkyv",
+ "tokio",
+ "twilight-model 0.16.0",
 ]
 
 [[package]]
